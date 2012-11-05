@@ -1,7 +1,6 @@
 var OpenInChrome = {
     init: function() {
         var keyset = document.getElementById("mainKeyset");
-        // TODO Custom keybindings
         var key = document.createElement("key");
         key.setAttribute("id", "OpenInChrome");
         key.setAttribute("key", 'o');
@@ -16,8 +15,7 @@ var OpenInChrome = {
         if (xrt.OS == "Darwin") {
             return ['/usr/bin/open', '-a', 'Google Chrome'];
         } else {
-            // TODO Linux support
-            return null;
+            return ['google-chrome'];
         }
     },
 
