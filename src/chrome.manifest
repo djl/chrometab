@@ -1,2 +1,2 @@
-content OpenInChrome chrome/content/
-overlay chrome://browser/content/browser.xul chrome://OpenInChrome/content/OpenInChrome.xul
+content chrometab chrome/content/
+overlay chrome://browser/content/browser.xul chrome://ChromeTab/content/ChromeTab.xul

@@ -1,13 +1,13 @@
-var OpenInChrome = {
+var ChromeTab = {
     init: function() {
         var keyset = document.getElementById("mainKeyset");
         var key = document.createElement("key");
-        key.setAttribute("id", "OpenInChrome");
+        key.setAttribute("id", "ChromeTab");
         key.setAttribute("key", 'o');
-        key.setAttribute("oncommand", "OpenInChrome.go();");
+        key.setAttribute("oncommand", "ChromeTab.go();");
         key.setAttribute("modifiers", "accel shift");
         keyset.appendChild(key);
-        OpenInChrome.chromePath();
+        ChromeTab.chromePath();
     },
 
     chromePath: function() {
@@ -21,7 +21,7 @@ var OpenInChrome = {
 
     go: function() {
         var url = document.location.href;
-        var args = OpenInChrome.chromePath();
+        var args = ChromeTab.chromePath();
         if (url && args) {
             args.push(window.content.location.href);
             var cmd = args.shift()
@@ -34,4 +34,4 @@ var OpenInChrome = {
     }
 }
 
-window.addEventListener("load", OpenInChrome.init, false);
+window.addEventListener("load", ChromeTab.init, false);
