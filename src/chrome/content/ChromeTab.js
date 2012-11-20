@@ -7,7 +7,6 @@ var ChromeTab = {
         key.setAttribute("oncommand", "ChromeTab.go();");
         key.setAttribute("modifiers", "accel shift");
         keyset.appendChild(key);
-        ChromeTab.chromePath();
     },
 
     chromePath: function() {
