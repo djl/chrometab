@@ -1,28 +1,50 @@
 var ChromeTab = {
-    init: function() {
-        var keyset = document.getElementById("mainKeyset");
-        var key = document.createElement("key");
-        key.setAttribute("id", "ChromeTab");
-        key.setAttribute("key", 'o');
-        key.setAttribute("oncommand", "ChromeTab.go();");
-        key.setAttribute("modifiers", "accel shift");
-        keyset.appendChild(key);
+    keys: {
+        'ChromeTab': {
+            'key': 'o',
+            'oncommand': 'ChromeTab.go();',
+            'modifiers': 'accel shift',
+        },
+        'ChromeTabIncognito': {
+            'key': 'i',
+            'oncommand': 'ChromeTab.incognito();',
+            'modifiers': 'accel shift',
+        },
     },
 
-    chromePath: function() {
-        var xrt = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULRuntime);
-        if (xrt.OS == "Darwin") {
-            return ['/usr/bin/open', '-a', 'Google Chrome'];
-        } else {
-            return ['google-chrome'];
+    init: function() {
+        var keyset = document.getElementById("mainKeyset");
+        for (var id in this.keys) {
+            var obj = this.keys[id];
+            var key = document.createElement("key");
+            key.setAttribute("id", id);
+            key.setAttribute("key", obj['key']);
+            key.setAttribute("oncommand", obj['oncommand']);
+            key.setAttribute("modifiers", obj['modifiers']);
+            keyset.appendChild(key);
         }
     },
 
-    go: function() {
-        var url = document.location.href;
-        var args = ChromeTab.chromePath();
-        if (url && args) {
-            args.push(window.content.location.href);
+    chromePath: function(url, incognito) {
+        var xrt = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULRuntime);
+        if (xrt.OS == "Darwin") {
+            args = ['/usr/bin/open', '-a', 'Google Chrome', url];
+            if (incognito) {
+                args = args.concat(['--args', '--incognito'])
+            }
+        } else {
+            args = ['google-chrome', url];
+            if (incognito) {
+                args.push('--incognito');
+            }
+        }
+        return args
+    },
+
+    go: function(incognito) {
+        var url = gBrowser.contentDocument.location.href;
+        if (url) {
+            var args = ChromeTab.chromePath(url, incognito);
             var cmd = args.shift()
             var file = Components.classes["@mozilla.org/file/local;1"].createInstance(Components.interfaces.nsILocalFile);
             var process = window.Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess);
@@ -30,7 +52,11 @@ var ChromeTab = {
             process.init(file)
             process.run(false, args, args.length);
         }
-    }
+    },
+
+    incognito: function() {
+        ChromeTab.go(true);
+    },
 }
 
-window.addEventListener("load", ChromeTab.init, false);
+window.addEventListener("load", ChromeTab.init(), false);

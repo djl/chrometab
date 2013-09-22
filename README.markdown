@@ -1,4 +1,5 @@
 ChromeTab
 ---------
 
-Open the current URL in Chrome with `accel-shift-o`.
+`accel-shift-o`: Open with Chrome  
+`accel-shift-i`: Open with Chrome in Incognito mode
