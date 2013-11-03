@@ -6,7 +6,7 @@ var ChromeTab = {
             'modifiers': 'accel shift',
         },
         'ChromeTabIncognito': {
-            'key': 'i',
+            'key': 'u',
             'oncommand': 'ChromeTab.incognito();',
             'modifiers': 'accel shift',
         },
